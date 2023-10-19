@@ -1,1 +1,1 @@
-# jmeter-infinite
+# jmeter 插件集
