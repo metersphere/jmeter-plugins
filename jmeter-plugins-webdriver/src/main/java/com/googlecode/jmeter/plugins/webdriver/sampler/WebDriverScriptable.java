@@ -14,14 +14,14 @@ import org.slf4j.Logger;
  */
 public final class WebDriverScriptable {
     private static final String[] EMPTY_ARGS = new String[0];
-    private String name;
-    private String parameters;
-    private Logger log;
-    private WebDriver browser;
-    private SampleResult sampleResult;
-    private JMeterVariables vars;
-    private Properties props;
-    private JMeterContext ctx;
+    public String name;
+    public String parameters;
+    public Logger log;
+    public WebDriver browser;
+    public SampleResult sampleResult;
+    public JMeterVariables vars;
+    public Properties props;
+    public JMeterContext ctx;
 
     public void setName(String name) {
         this.name = name;
