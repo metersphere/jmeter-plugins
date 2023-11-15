@@ -1,7 +1,6 @@
 package io.metersphere.jmeter.mock.mapper;
 
 import io.metersphere.jmeter.mock.exception.MockException;
-import io.metersphere.jmeter.mock.function.ExFunction;
 import io.metersphere.jmeter.mock.util.RandomUtils;
 
 import java.lang.reflect.Array;

@@ -124,4 +124,6 @@ ${__Mock(@integer)}
 `@ctitle`	随机生成一个中文标题
 
 ## 正则表达式
-`@regexp(input,regexp)`	根据正则表达式返回结果,表达式需要加''
+`@regexp(input,regexp)`	根据正则表达式返回结果,表达式需要加引号''
+
+## 拼接函数目前只支持 @word@title@ctitle 这种连续拼接方式，中间不能有空格｜其他字符

@@ -30,12 +30,10 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
      * 多余字符
      * 集合字段的指令类参数中可能出现多余字符，当有多于字符的时候，list集合的类型有很大的概率是Sting、Integer之类的基础数据类型
      */
-    private final String[] moreStrs;
+    private final String[] moreStars;
 
     /**
      * 获取一个数组
-     *
-     * @return
      */
     @Override
     public Object[] value() {
@@ -79,17 +77,17 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
                 //执行全部执行者
                 for (int j = 0; j < invokers.length; j++) {
                     //如果有多余字符，先拼接多余字符
-                    if (moreStrs != null) {
-                        sb.append(moreStrs[j]);
+                    if (moreStars != null) {
+                        sb.append(moreStars[j]);
                     }
                     //拼接执行结果
                     sb.append(invokers[j].invoke());
                 }
                 //如果有多余字符且多余字符的数量比执行者多1
                 //只要多余字符比执行者数量大，则说明多余字符的数量为执行者的数量+1
-                if (moreStrs != null && moreStrs.length > invokers.length) {
+                if (moreStars != null && moreStars.length > invokers.length) {
                     //拼接多余字符的最后值
-                    sb.append(moreStrs[moreStrs.length - 1]);
+                    sb.append(moreStars[moreStars.length - 1]);
                 }
                 String invokeStr = sb.toString();
                 try {
@@ -110,9 +108,6 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
 
     /**
      * 当执行者数量不大于1的时候
-     *
-     * @param num
-     * @param list
      */
     private void getValueWhenInvokerIs1(int num, Object[] list) {
 
@@ -121,7 +116,7 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
         //尽管只有一个方法执行者，但是仍然可能存在多余字符
         //所以分两种情况
         //在有多余字符的情况下，处理方式类似于上面的多执行者
-        if (moreStrs != null) {
+        if (moreStars != null) {
             //如果存在多余字符
             //准备拼接结果
             StringBuilder sb = new StringBuilder();
@@ -129,14 +124,14 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
             try {
                 for (int i = 0; i < num; i++) {
                     //先拼接多余字符，再拼接方法执行结果
-                    sb.append(moreStrs[i]);
+                    sb.append(moreStars[i]);
                     //方法的执行结果
                     sb.append(invoker.invoke());
                     //如果多余字符有结尾，拼接
                     //由于只有一个执行者，所以如果多余字符数量大于1就说明有尾部多余
-                    if (moreStrs.length > 1) {
+                    if (moreStars.length > 1) {
                         //这里的元素索引不出意外的话，必定是2
-                        sb.append(moreStrs[moreStrs.length - 1]);
+                        sb.append(moreStars[moreStars.length - 1]);
                     }
                     String invokeData = sb.toString();
                     //尝试对结果进行eval
@@ -169,12 +164,12 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
      *
      * @param invokers        方法执行者
      * @param integerInterval 区间参数
-     * @param moreStrs        多余字符
+     * @param moreStars       多余字符
      */
-    public ArrayFieldValueGetter(Invoker[] invokers, Integer[] integerInterval, String[] moreStrs) {
+    public ArrayFieldValueGetter(Invoker[] invokers, Integer[] integerInterval, String[] moreStars) {
         this.invokers = invokers;
         //如果多余字符长度为0，则赋值为null
-        this.moreStrs = moreStrs.length == 0 ? null : moreStrs;
+        this.moreStars = moreStars.length == 0 ? null : moreStars;
         //如果为true，则使用默认的数组
         boolean isNull = integerInterval == null || integerInterval.length > 2 || integerInterval[0] == null || integerInterval[1] == null;
         if (isNull) {
@@ -187,14 +182,14 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
     /**
      * 构造方法，区间参数默认为[1,1]
      *
-     * @param invokers 方法执行者
-     * @param moreStrs 多余字符
+     * @param invokers  方法执行者
+     * @param moreStars 多余字符
      */
-    public ArrayFieldValueGetter(Invoker[] invokers, String[] moreStrs) {
+    public ArrayFieldValueGetter(Invoker[] invokers, String[] moreStars) {
         this.invokers = invokers;
         this.integerInterval = new Integer[]{1, 1};
         //如果多余字符长度为0，则赋值为null
-        this.moreStrs = moreStrs.length == 0 ? null : moreStrs;
+        this.moreStars = moreStars.length == 0 ? null : moreStars;
     }
 
 
@@ -215,7 +210,7 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
             this.integerInterval = integerInterval;
         }
         //多余字符赋值为null
-        this.moreStrs = null;
+        this.moreStars = null;
     }
 
     /**
@@ -227,7 +222,7 @@ public class ArrayFieldValueGetter implements FieldValueGetter<Object[]> {
         this.invokers = invokers;
         this.integerInterval = new Integer[]{1, 1};
         //多余字符赋值为null
-        this.moreStrs = null;
+        this.moreStars = null;
     }
 
 }

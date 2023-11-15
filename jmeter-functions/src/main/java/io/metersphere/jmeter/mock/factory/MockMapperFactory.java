@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * 生成映射Map的工厂
+ *
  * @since JDK21
  **/
 public class MockMapperFactory {
@@ -34,13 +35,13 @@ public class MockMapperFactory {
                 valueAndParam = getValue(f.getAnnotation(MockArray.class));
             }
             // 无注解，返回null并由后续过滤
-            if(valueAndParam == null){
+            if (valueAndParam == null) {
                 return null;
             }
             return new AbstractMap.SimpleEntry<>(f.getName() + valueAndParam.getValue(), valueAndParam.getKey().get());
         }).filter(Objects::nonNull).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if(other != null){
+        if (other != null) {
             mapper.putAll(other);
         }
         return mapper;
@@ -58,6 +59,7 @@ public class MockMapperFactory {
     /**
      * 通过注解MockValue类型来获取value值
      * 如果为null或者值没有（保留空字符），则返回null
+     *
      * @return {@code Entry<Supplier<Object>, fieldParam>} , 返回一个entry，key为value中的值的获取函数，value为map映射中字段的区间参数值。
      */
     public static Map.Entry<Supplier<Object>, String> getValue(MockValue mockValueAnnotation) {
@@ -70,7 +72,7 @@ public class MockMapperFactory {
         Supplier<Object> valueGetter = valueType.equals(String.class) ? () -> mapValue : () -> ConvertUtils.convert(mapValue, valueType);
 
         String param = mockValueAnnotation.param().trim();
-        if(!param.isEmpty() && !param.startsWith("|")){
+        if (!param.isEmpty() && !param.startsWith("|")) {
             param = "|" + param;
         }
         return new AbstractMap.SimpleEntry<>(valueGetter, param);
@@ -78,6 +80,7 @@ public class MockMapperFactory {
 
     /**
      * 通过注解MockValue类型来获取value值
+     *
      * @return {@code Entry<Supplier<Object>, fieldParam>} , 返回一个entry，key为value中的值的获取函数，value为map映射中字段的区间参数值。
      */
     public static Map.Entry<Supplier<Object>, String> getValue(MockArray mockArrayAnnotation) {
@@ -89,7 +92,7 @@ public class MockMapperFactory {
             final String[] mockArrayValue = mockArrayAnnotation.value();
             final Supplier<Object> valueGetter = () -> arrayMapper.map(mockArrayValue);
             String param = mockArrayAnnotation.param().trim();
-            if(param.length() > 0 && !param.startsWith("|")){
+            if (!param.isEmpty() && !param.startsWith("|")) {
                 param = "|" + param;
             }
             return new AbstractMap.SimpleEntry<>(valueGetter, param);

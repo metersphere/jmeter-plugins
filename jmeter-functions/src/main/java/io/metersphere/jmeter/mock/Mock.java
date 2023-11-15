@@ -5,8 +5,10 @@ import io.metersphere.jmeter.mock.bean.*;
 import io.metersphere.jmeter.mock.exception.MockException;
 import io.metersphere.jmeter.mock.factory.MockMapperFactory;
 import io.metersphere.jmeter.mock.factory.MockObjectFactory;
+import io.metersphere.jmeter.mock.function.FunctionApply;
 import io.metersphere.jmeter.mock.parser.ParameterParser;
 import io.metersphere.jmeter.mock.util.MockUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -193,18 +195,20 @@ public class Mock {
         return null;
     }
 
-    public static Object parser(String key, Object value) {
-        try {
-            Map<String, Object> paramMap = new HashMap<>() {{
-                put(key, value);
-            }};
-            MockMapBean bean = ParameterParser.parser(paramMap);
-            if (bean.getObject() != null) {
-                return bean.getObject().get(key);
-            }
-        } catch (Exception e) {
-            return value;
+    public static Object calculate(Object itemValue) {
+        if (ObjectUtils.isEmpty(itemValue)) {
+            return itemValue;
         }
-        return value;
+        try {
+            String[] func = itemValue.toString().split("\\|");
+            Object value = ParameterParser.parser(func[0].trim(), func[0].trim());
+            if (func.length == 1) {
+                return value;
+            }
+            value = FunctionApply.apply(value.toString(), func[1].trim());
+            return value;
+        } catch (Exception e) {
+            return itemValue;
+        }
     }
 }

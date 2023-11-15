@@ -6,7 +6,6 @@ import io.metersphere.jmeter.mock.invoker.Invoker;
 
 /**
  * 整数类型字段值获取器
- * 
  */
 public class IntegerFieldValueGetter implements FieldValueGetter<Integer> {
 
@@ -14,11 +13,12 @@ public class IntegerFieldValueGetter implements FieldValueGetter<Integer> {
      * 方法执行者用于获取整数类型的字段值
      * 执行者必然只有一个
      */
-    private Invoker invoker;
+    private final Invoker invoker;
 
 
     /**
      * 获取一个整数类型的字段值
+     *
      * @return
      */
     @Override

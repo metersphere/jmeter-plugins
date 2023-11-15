@@ -11,8 +11,6 @@ import java.util.function.Supplier;
 
 /**
  * 字符串类型字段值的获取者
- *
- * 
  */
 public class StringFieldValueGetter implements FieldValueGetter<String> {
 
@@ -26,12 +24,6 @@ public class StringFieldValueGetter implements FieldValueGetter<String> {
      */
     private final String[] moreStr;
 
-    /**
-     * 区间参数,重复最终输出,参数期望中长度为2，0索引为最小值，1为最大值
-     * 默认值为[1,1],即为不重复
-     */
-    private final Integer[] integerInterval;
-
 
     /**
      * 获取重复次数的获取函数。
@@ -41,8 +33,6 @@ public class StringFieldValueGetter implements FieldValueGetter<String> {
 
     /**
      * 获取字段值
-     *
-     * @return
      */
     @Override
     public String value() {
@@ -98,9 +88,6 @@ public class StringFieldValueGetter implements FieldValueGetter<String> {
 
     /**
      * 构造
-     *
-     * @param invokers
-     * @param moreStr
      */
     public StringFieldValueGetter(Invoker[] invokers, String[] moreStr, Integer[] integerInterval) {
         this.invokers = invokers;
@@ -109,10 +96,8 @@ public class StringFieldValueGetter implements FieldValueGetter<String> {
         //如果为true，则使用默认的数组
         boolean isNull = integerInterval == null || integerInterval.length > 2 || integerInterval[0] == null || integerInterval[1] == null;
         if (isNull) {
-            this.integerInterval = new Integer[]{1, 1};
             this.timeSupplier = () -> 1;
         } else {
-            this.integerInterval = integerInterval;
             int min = integerInterval[0];
             int max = integerInterval[1];
             this.timeSupplier = () -> RandomUtils.getNumberWithRight(min, max);
@@ -121,15 +106,11 @@ public class StringFieldValueGetter implements FieldValueGetter<String> {
 
     /**
      * 构造，区间参数默认为[1-1]
-     *
-     * @param invokers
-     * @param moreStr
      */
     public StringFieldValueGetter(Invoker[] invokers, String[] moreStr) {
         this.invokers = invokers;
         this.moreStr = moreStr;
         //区间为默认值
-        this.integerInterval = new Integer[]{1, 1};
         this.timeSupplier = () -> 1;
     }
 

@@ -8,7 +8,6 @@ import javax.script.ScriptException;
 
 /**
  * 字段类型为任意未知类型的时候
- * 
  */
 public class ObjectFieldValueGetter implements FieldValueGetter<Object> {
 
@@ -19,8 +18,6 @@ public class ObjectFieldValueGetter implements FieldValueGetter<Object> {
 
     /**
      * 获取值
-     *
-     * @return
      */
     @Override
     public Object value() {
@@ -50,7 +47,7 @@ public class ObjectFieldValueGetter implements FieldValueGetter<Object> {
                     //如果出现异常，则直接返回结果的拼接字符串
                     return returnString.toString();
                 }
-            }else {
+            } else {
                 //直接返回执行结果
                 return invokers[0].invoke();
             }

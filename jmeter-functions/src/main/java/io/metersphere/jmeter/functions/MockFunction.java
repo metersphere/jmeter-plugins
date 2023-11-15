@@ -32,7 +32,7 @@ public class MockFunction extends AbstractFunction {
             final String varTrim = varName.execute().trim();
             if (vars != null && !varTrim.isEmpty()) {
                 logger.info("处理MOCK函数：" + varTrim);
-                value = Mock.parser(varTrim, varTrim).toString();
+                value = Mock.calculate(varTrim).toString();
                 vars.put(varTrim, value);
             }
         }

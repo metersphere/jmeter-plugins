@@ -14,8 +14,6 @@ import java.util.function.Supplier;
 /**
  * List集合的字段值获取器
  * 有较大的可能出现一些类型异常，请注意一定按照规范填写
- *
- * 
  */
 public class ListFieldValueGetter implements FieldValueGetter<List> {
 
@@ -79,9 +77,6 @@ public class ListFieldValueGetter implements FieldValueGetter<List> {
 
     /**
      * 当执行者的数量超过1的时候
-     *
-     * @param num
-     * @param list
      */
     private void getValueWhenInvokersMoreThan1(int num, List list) {
         //执行者数量大于1的情况下，只能将全部执行结果的toString拼接，并尝试使用eval进行执行
@@ -177,12 +172,9 @@ public class ListFieldValueGetter implements FieldValueGetter<List> {
 
     /**
      * 获取一个固定值的区间获取函数
-     *
-     * @param a 固定区间 a
-     * @param b 固定区间 b
      */
-    static Supplier<Integer[]> normalIntegerIntervalSupplier(int a, int b) {
-        Integer[] intervalsNew = new Integer[]{a, b};
+    static Supplier<Integer[]> normalIntegerIntervalSupplier() {
+        Integer[] intervalsNew = new Integer[]{1, 1};
         return () -> intervalsNew;
     }
 
@@ -224,7 +216,7 @@ public class ListFieldValueGetter implements FieldValueGetter<List> {
         //如果为true，则使用默认的数组
         boolean isNull = integerInterval == null || integerInterval.length > 2 || integerInterval[0] == null || integerInterval[1] == null;
         if (isNull) {
-            this.integerIntervalSupplier = normalIntegerIntervalSupplier(1, 1);
+            this.integerIntervalSupplier = normalIntegerIntervalSupplier();
         } else {
             this.integerIntervalSupplier = normalIntegerIntervalSupplier(integerInterval);
         }
@@ -260,7 +252,7 @@ public class ListFieldValueGetter implements FieldValueGetter<List> {
      */
     public ListFieldValueGetter(Invoker[] invokers, String[] moreStrs) {
         this.invokers = invokers;
-        this.integerIntervalSupplier = normalIntegerIntervalSupplier(1, 1);
+        this.integerIntervalSupplier = normalIntegerIntervalSupplier();
         //如果多余字符长度为0，则赋值为null
         this.moreStrs = moreStrs.length == 0 ? null : moreStrs;
     }
@@ -277,7 +269,7 @@ public class ListFieldValueGetter implements FieldValueGetter<List> {
         //如果为true，则使用默认的数组
         boolean isNull = integerInterval == null || integerInterval.length > 2 || integerInterval[0] == null || integerInterval[1] == null;
         if (isNull) {
-            this.integerIntervalSupplier = normalIntegerIntervalSupplier(1, 1);
+            this.integerIntervalSupplier = normalIntegerIntervalSupplier();
         } else {
             this.integerIntervalSupplier = normalIntegerIntervalSupplier(integerInterval);
         }
@@ -315,7 +307,7 @@ public class ListFieldValueGetter implements FieldValueGetter<List> {
      */
     public ListFieldValueGetter(Invoker[] invokers) {
         this.invokers = invokers;
-        this.integerIntervalSupplier = normalIntegerIntervalSupplier(1, 1);
+        this.integerIntervalSupplier = normalIntegerIntervalSupplier();
         //多余字符赋值为null
         this.moreStrs = null;
     }

@@ -17,8 +17,6 @@ import java.util.*;
 /**
  * 参数解析器，用于解析用户填入的参数语法
  * 解析包({@link io.metersphere.jmeter.mock.parser})下唯一公共接口，为{@link Mock}解析用户参数
- *
- * 
  */
 public class ParameterParser {
     /* 内部使用的各类型的常量，用于switch语句，为参数分配解析器 */
@@ -615,5 +613,20 @@ public class ParameterParser {
         return TYPE_OBJECT;
     }
 
+    public static Object parser(String key, Object value) {
+        try {
+            // 判断是否包含函数
+            Map<String, Object> paramMap = new HashMap<>() {{
+                put(key, value);
+            }};
+            MockMapBean bean = ParameterParser.parser(paramMap);
+            if (bean.getObject() != null) {
+                return bean.getObject().get(key);
+            }
+        } catch (Exception e) {
+            return value;
+        }
+        return value;
+    }
 
 }

@@ -9,14 +9,13 @@ import java.lang.reflect.Method;
 /**
  * 假字段值的字段封装对象的抽象类
  * 假的字段有几种类型：
- * <ul>
- * <li>字符串</li>
- * <li>整数</li>
- * <li>浮点数</li>
- * <li>集合</li>
- * <li>数组</li>
- * <li>引用对象</li>
- * </ul>
+ * <p>
+ * 字符串
+ * 整数
+ * 浮点数
+ * 集合
+ * 数组
+ * 引用对象
  */
 public class MockField<T> {
 

@@ -21,7 +21,7 @@ public class MockNormalObject<T> implements MockObject<T> {
     /**
      * 唯一构造
      */
-    public MockNormalObject(MockBean<T> mockBean){
+    public MockNormalObject(MockBean<T> mockBean) {
         this.mockBean = mockBean;
     }
 }

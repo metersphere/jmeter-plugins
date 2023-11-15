@@ -6,8 +6,6 @@ import java.util.Arrays;
 
 /**
  * 假对象的封装类，利用此类的getObject来获取一个对象
- *
- * 
  */
 public class MockBean<T> {
 
@@ -23,6 +21,7 @@ public class MockBean<T> {
 
     /**
      * 获取对象一个对象
+     *
      * @return
      */
     public T getObject() {
@@ -49,26 +48,24 @@ public class MockBean<T> {
     /**
      * 获取假字段集
      */
-    public MockField[] getFields(){
+    public MockField[] getFields() {
         return Arrays.copyOf(fields, fields.length);
     }
 
 
-    public Class<T> getObjectClass(){
+    public Class<T> getObjectClass() {
         return objectClass;
     }
 
 
-    public MockBean<T> parallel(){
+    public MockBean<T> parallel() {
         return new ParallelMockBean<>(objectClass, Arrays.copyOf(fields, fields.length));
     }
 
 
-    public MockBean<T> sequential(){
+    public MockBean<T> sequential() {
         return this;
     }
-
-
 
 
     /**

@@ -10,10 +10,9 @@ public class MockMapBean extends MockBean<Map> {
 
     /**
      * 重写MockBean的方法，返回Map封装对象
-     * @return
      */
     @Override
-    public Map<String, Object> getObject(){
+    public Map<String, Object> getObject() {
         //假字段集
         MockField[] fields = this.getFields();
 
@@ -38,12 +37,15 @@ public class MockMapBean extends MockBean<Map> {
 
     /**
      * 此方法来自 {@link Collectors#throwingMerger()}
+     *
      * @param <T>
      * @return
      */
     @SuppressWarnings("JavadocReference")
     protected static <T> BinaryOperator<T> throwingMerger() {
-        return (u,v) -> { throw new IllegalStateException(String.format("Duplicate key %s", u)); };
+        return (u, v) -> {
+            throw new IllegalStateException(String.format("Duplicate key %s", u));
+        };
     }
 
 }

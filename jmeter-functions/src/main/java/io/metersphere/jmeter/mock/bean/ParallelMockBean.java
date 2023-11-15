@@ -9,7 +9,6 @@ public class ParallelMockBean<T> extends MockBean<T> {
 
     /**
      * 获取对象一个对象
-     * @return
      */
     public T getObject() {
         //先创建一个实例
@@ -32,12 +31,12 @@ public class ParallelMockBean<T> extends MockBean<T> {
     }
 
 
-    public MockBean<T> parallel(){
+    public MockBean<T> parallel() {
         return this;
     }
 
 
-    public MockBean<T> sequential(){
+    public MockBean<T> sequential() {
         return new MockBean<>(objectClass, Arrays.copyOf(fields, fields.length));
     }
 

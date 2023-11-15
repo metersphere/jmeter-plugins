@@ -3,9 +3,7 @@ package io.metersphere.jmeter.mock.bean;
 import java.util.Map;
 
 /**
- *
  * Map类型的结果集合
- *
  */
 public class MockMapObject implements MockObject<Map> {
 
@@ -18,7 +16,6 @@ public class MockMapObject implements MockObject<Map> {
 
 
     /**
-     *
      * @return
      */
     @Override
@@ -28,9 +25,10 @@ public class MockMapObject implements MockObject<Map> {
 
     /**
      * 唯一构造
+     *
      * @param mockMapBean
      */
-    public MockMapObject(MockMapBean mockMapBean){
+    public MockMapObject(MockMapBean mockMapBean) {
         this.mockMapBean = mockMapBean;
     }
 

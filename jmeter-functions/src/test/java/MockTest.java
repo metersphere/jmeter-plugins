@@ -4,72 +4,88 @@ import io.metersphere.jmeter.mock.Mock;
 public class MockTest {
     public static void main(String[] args) {
         // 基本变量
-        System.out.println(Mock.parser("@boolean", "@cname"));
-
-        System.out.println(Mock.parser("@boolean", "@bool"));
-        System.out.println(Mock.parser("@natural", "@natural")); // 待补充
-        System.out.println(Mock.parser("@natural(1,101)", "@natural(1,101)"));// 待补充
-        System.out.println(Mock.parser("@integer", "@integer"));
-        System.out.println(Mock.parser("@integer(1,100)", "@integer(1,100)"));
-        System.out.println(Mock.parser("@floatNumber( 1, 10, 2, 5 )", "@floatNumber(1,10,2,5)"));
-        System.out.println(Mock.parser("@character(pool)", "@character(abc)"));
-        System.out.println(Mock.parser("@character('lower')", "@character('lower')"));
-        System.out.println(Mock.parser("@character('upper')", "@character('upper')"));
-        System.out.println(Mock.parser("@character('symbol')", "@character('symbol')"));
-        System.out.println(Mock.parser("@string(pool,1,10)", "@string(1,10)"));
-        System.out.println(Mock.parser("@range( 1, 100, 1 )", "@range"));
+        System.out.println("@boolean= " + Mock.calculate("@cname@bool@natural"));
+        System.out.println("@natural= " + Mock.calculate("@natural")); // 待补充
+        System.out.println("@natural(1,101)= " + Mock.calculate("@natural(1,101)"));// 待补充
+        System.out.println("@integer= " + Mock.calculate("@integer"));
+        System.out.println("@integer(1,100)= " + Mock.calculate("@integer(1,100)"));
+        System.out.println("@floatNumber( 1, 10, 2, 5 )= " + Mock.calculate("@floatNumber(1,10,2,5)"));
+        System.out.println("@character(pool)= " + Mock.calculate("@character(pool)"));
+        System.out.println("@character('lower')= " + Mock.calculate("@character('lower')"));
+        System.out.println("@character('upper')= " + Mock.calculate("@character('upper')"));
+        System.out.println("@character('symbol')= " + Mock.calculate("@character('symbol')"));
+        System.out.println("@string(pool,1,10)= " + Mock.calculate("@string(pool,1,10)"));
+        System.out.println("@range( 1, 100, 1 )= " + Mock.calculate("@range(1,100,1)"));
 
         // 日期变量
-        System.out.println(Mock.parser("@date('yyyy-MM-dd')", "@date('yyyy-MM-dd')"));
-        System.out.println(Mock.parser("@time('HH:mm:ss')", "@time('HH:mm:ss')"));
-        System.out.println(Mock.parser("@dateTime('yyyy-MM-dd HH:mm:ss')", "@dateTime('yyyy-MM-dd HH:mm:ss')"));
-        System.out.println(Mock.parser("@now('yyyy-MM-dd HH:mm:ss')", "@now('yyyy-MM-dd HH:mm:ss')"));
+        System.out.println("@date('yyyy-MM-dd')= " + Mock.calculate("@date('yyyy-MM-dd')"));
+        System.out.println("@time('HH:mm:ss')= " + Mock.calculate("@time('HH:mm:ss')"));
+        System.out.println("@dateTime('yyyy-MM-dd HH:mm:ss')= " + Mock.calculate("@dateTime('yyyy-MM-dd HH:mm:ss')"));
+        System.out.println("@now('yyyy-MM-dd HH:mm:ss')= " + Mock.calculate("@now('yyyy-MM-dd HH:mm:ss')"));
         // 主键
-        System.out.println(Mock.parser("@guid", "@uuid"));
-        System.out.println(Mock.parser("@increment(1)", "@increment(1)"));
+        System.out.println("@guid= " + Mock.calculate("@guid"));
+        System.out.println("@increment(1)= " + Mock.calculate("@increment(1)"));
         // web 变量
-        System.out.println(Mock.parser("@url('http')", "@url('http')"));
-        System.out.println(Mock.parser("@protocol", "@protocol"));
-        System.out.println(Mock.parser("@domain", "@domain"));
-        System.out.println(Mock.parser("@tld", "@tld"));
-        System.out.println(Mock.parser("@email", "@email"));
-        System.out.println(Mock.parser("@ip", "@ip"));
+        System.out.println("@url('http')= " + Mock.calculate("@url('http')"));
+        System.out.println("@protocol= " + Mock.calculate("@protocol"));
+        System.out.println("@domain= " + Mock.calculate("@domain"));
+        System.out.println("@tld= " + Mock.calculate("@tld"));
+        System.out.println("@email= " + Mock.calculate("@email"));
+        System.out.println("@ip= " + Mock.calculate("@ip"));
         // 地区
-        System.out.println(Mock.parser("@region", "@region"));
-        System.out.println(Mock.parser("@province", "@province"));
-        System.out.println(Mock.parser("@city", "@city"));
-        System.out.println(Mock.parser("@county", "@county"));
-        System.out.println(Mock.parser("@county(true)", "@county(true)"));
+        System.out.println("@region= " + Mock.calculate("@region"));
+        System.out.println("@province= " + Mock.calculate("@province"));
+        System.out.println("@city= " + Mock.calculate("@city"));
+        System.out.println("@county= " + Mock.calculate("@county"));
+        System.out.println("@county(true)= " + Mock.calculate("@county(true)"));
         // 邮编变量
-        System.out.println(Mock.parser("@zip", "@zip"));
+        System.out.println("@zip= " + Mock.calculate("@zip"));
         // 身份证号码
-        System.out.println(Mock.parser("@idCard", "@idCard"));
+        System.out.println("@idCard= " + Mock.calculate("@idCard"));
         // 手机号
-        System.out.println(Mock.parser("@phoneNumber", "@phoneNumber"));
+        System.out.println("@phoneNumber= " + Mock.calculate("@phoneNumber"));
         // 人名变量
-        System.out.println(Mock.parser("@first", "@first"));
-        System.out.println(Mock.parser("@last", "@last"));
-        System.out.println(Mock.parser("@name", "@name"));
-        System.out.println(Mock.parser("@cfirst", "@cfirst"));
-        System.out.println(Mock.parser("@clast", "@clast"));
-        System.out.println(Mock.parser("@cname", "@cname"));
+        System.out.println("@first= " + Mock.calculate("@first"));
+        System.out.println("@last= " + Mock.calculate("@last"));
+        System.out.println("@name= " + Mock.calculate("@name"));
+        System.out.println("@cfirst= " + Mock.calculate("@cfirst"));
+        System.out.println("@clast= " + Mock.calculate("@clast"));
+        System.out.println("@cname= " + Mock.calculate("@cname"));
         // 颜色变量
-        System.out.println(Mock.parser("@color", "@color"));
-        System.out.println(Mock.parser("@rgb", "@rgb"));
-        System.out.println(Mock.parser("@rgba", "@rgba"));
-        System.out.println(Mock.parser("@hsl", "@hsl"));
+        System.out.println("@color= " + Mock.calculate("@color"));
+        System.out.println("@rgb= " + Mock.calculate("@rgb"));
+        System.out.println("@rgba= " + Mock.calculate("@rgba"));
+        System.out.println("@hsl= " + Mock.calculate("@hsl"));
+
         // 文本变量
-        System.out.println(Mock.parser("@paragraph", "@paragraph"));
-        System.out.println(Mock.parser("@cparagraph", "@cparagraph"));
-        System.out.println(Mock.parser("@sentence", "@sentence"));
-        System.out.println(Mock.parser("@csentence", "@csentence"));
-        System.out.println(Mock.parser("@word", "@word"));
-        System.out.println(Mock.parser("@cword", "@cword"));
-        System.out.println(Mock.parser("@title", "@title"));
-        System.out.println(Mock.parser("@ctitle", "@ctitle"));
+        System.out.println("@paragraph= " + Mock.calculate("@paragraph"));
+        System.out.println("@cparagraph= " + Mock.calculate("@cparagraph"));
+        System.out.println("@sentence= " + Mock.calculate("@sentence"));
+        System.out.println("@csentence= " + Mock.calculate("@csentence"));
+        System.out.println("@word= " + Mock.calculate("@word"));
+        System.out.println("@cword= " + Mock.calculate("@cword"));
+        System.out.println("@title= " + Mock.calculate("@title"));
+        System.out.println("@ctitle= " + Mock.calculate("@ctitle"));
 
         // 正则表达式
-        System.out.println(Mock.parser("@regexp( regexp )", "@regexp('\\$(\\\\d+\\\\.\\\\d{2})')"));
+        System.out.println("@regexp( regexp )= " + Mock.calculate("@regexp('\\$(\\\\d+\\\\.\\\\d{2})')"));
+
+        System.out.println("开始测试函数处理 ============ ");
+        System.out.println("@ctitle= " + Mock.calculate("@string|md5"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|base64"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|unbase64"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|substr:1,3"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|concat:0000000"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|lconcat:0000000"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|sha1"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|sha224"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|sha256"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|sha384"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|sha512"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|lower"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|upper"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|length"));
+        System.out.println("@ctitle= " + Mock.calculate("@string|number"));
 
     }
 }
