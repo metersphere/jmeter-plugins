@@ -1,6 +1,6 @@
 package io.metersphere.jmeter.functions;
 
-import io.metersphere.jmeter.utils.ScriptEngineUtils;
+import io.metersphere.jmeter.mock.Mock;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
@@ -11,10 +11,12 @@ import org.apache.jmeter.threads.JMeterVariables;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MockFunction extends AbstractFunction {
     public static final String KEY = "__Mock";
     private static final List<String> desc = new LinkedList<>();
+    private static final Logger logger = Logger.getLogger(MockFunction.class.getCanonicalName());
 
     private CompoundVariable varName;
 
@@ -28,10 +30,9 @@ public class MockFunction extends AbstractFunction {
         if (varName != null) {
             JMeterVariables vars = getVariables();
             final String varTrim = varName.execute().trim();
-            if (vars != null && varTrim.length() > 0) {
-                // vars will be null
-                // on TestPlan
-                value = ScriptEngineUtils.calculate(varTrim);
+            if (vars != null && !varTrim.isEmpty()) {
+                logger.info("处理MOCK函数：" + varTrim);
+                value = Mock.parser(varTrim, varTrim).toString();
                 vars.put(varTrim, value);
             }
         }
