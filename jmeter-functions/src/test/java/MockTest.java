@@ -87,5 +87,7 @@ public class MockTest {
         System.out.println("@ctitle= " + Mock.calculate("@string|length"));
         System.out.println("@ctitle= " + Mock.calculate("@string|number"));
 
+        System.out.println(Mock.buildFunctionCallString("@integer@md5:123456"));
+
     }
 }

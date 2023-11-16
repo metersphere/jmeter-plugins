@@ -1,6 +1,7 @@
 package io.metersphere.jmeter.mock;
 
 
+import io.metersphere.jmeter.functions.MockFunction;
 import io.metersphere.jmeter.mock.bean.*;
 import io.metersphere.jmeter.mock.exception.MockException;
 import io.metersphere.jmeter.mock.factory.MockMapperFactory;
@@ -9,6 +10,8 @@ import io.metersphere.jmeter.mock.function.FunctionApply;
 import io.metersphere.jmeter.mock.parser.ParameterParser;
 import io.metersphere.jmeter.mock.util.MockUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -210,5 +213,16 @@ public class Mock {
         } catch (Exception e) {
             return itemValue;
         }
+    }
+
+    public static String buildFunctionCallString(String input) {
+        if (!StringUtils.startsWith(input, "@")) {
+            return input;
+        }
+        return "${" + MockFunction.KEY +
+                "(" +
+                RegExUtils.replaceAll(input, ",", "\\\\,") +
+                ")" +
+                "}";
     }
 }
