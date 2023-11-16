@@ -988,4 +988,12 @@ public class MockUtils {
         return RandomUtils.regexp(regex);
     }
 
+    public static String county(Boolean prefix) {
+        return RandomUtils.randomCounty(prefix);
+    }
+
+    public static String county() {
+        return RandomUtils.randomCounty(false);
+    }
+
 }

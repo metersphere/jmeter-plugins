@@ -4,13 +4,10 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Date;
 
 /**
  * 随机值获取工具类
@@ -18,6 +15,8 @@ import java.util.Date;
 public class RandomUtils {
     // ------------------------------- 部分测试数据---------------------------
     private static final String[] PROTOCOLS = {"http", "ftp", "smtp", "tcp", "udp"};
+
+    private static final String[] CHINA_REGIONS = {"华北", "华东", "华南", "华中", "西北", "西南", "东北", "台港澳"};
 
     private static final String[] PROVINCES = {
             "北京市", "天津市", "上海市", "重庆市", "河北省", "山西省", "辽宁省", "吉林省",
@@ -46,6 +45,206 @@ public class RandomUtils {
             "Davis", "Miller", "Wilson", "Moore", "Taylor"
             // Add more surnames as needed
     };
+
+    public static final List<String> COUNTY = Arrays.asList(
+            "东风区",
+            "郊区",
+            "桦南县",
+            "桦川县",
+            "汤原县",
+            "抚远县",
+            "同江市",
+            "富锦市",
+            "七台河市",
+            "新兴区",
+            "桃山区",
+            "茄子河区",
+            "勃利县",
+            "其它区",
+            "牡丹江市",
+            "东安区",
+            "阳明区",
+            "爱民区",
+            "西安区",
+            "东宁县",
+            "林口县",
+            "绥芬河市",
+            "海林市",
+            "宁安市",
+            "穆棱市",
+            "其它区",
+            "黑河市",
+            "爱辉区",
+            "嫩江县",
+            "逊克县",
+            "孙吴县",
+            "北安市",
+            "五大连池市",
+            "其它区",
+            "绥化市",
+            "北林区",
+            "望奎县",
+            "兰西县",
+            "青冈县",
+            "庆安县",
+            "明水县",
+            "绥棱县",
+            "安达市",
+            "肇东市",
+            "海伦市",
+            "其它区",
+            "大兴安岭地区",
+            "松岭区",
+            "新林区",
+            "呼中区",
+            "呼玛县",
+            "塔河县",
+            "漠河县",
+            "加格达奇区",
+            "其它区",
+            "上海",
+            "上海市",
+            "黄浦区",
+            "徐汇区",
+            "长宁区",
+            "静安区",
+            "普陀区",
+            "闸北区",
+            "虹口区",
+            "杨浦区",
+            "闵行区",
+            "宝山区",
+            "嘉定区",
+            "浦东新区",
+            "金山区",
+            "松江区",
+            "青浦区",
+            "奉贤区",
+            "崇明县",
+            "其它区",
+            "江苏省",
+            "南京市",
+            "玄武区",
+            "秦淮区",
+            "建邺区",
+            "鼓楼区",
+            "浦口区",
+            "栖霞区",
+            "雨花台区",
+            "江宁区",
+            "六合区",
+            "溧水区",
+            "高淳区",
+            "其它区",
+            "无锡市",
+            "崇安区",
+            "南长区",
+            "北塘区",
+            "锡山区",
+            "惠山区",
+            "滨湖区",
+            "江阴市",
+            "宜兴市",
+            "其它区",
+            "徐州市",
+            "鼓楼区",
+            "云龙区",
+            "贾汪区",
+            "泉山区",
+            "丰县",
+            "沛县",
+            "铜山区",
+            "睢宁县",
+            "新沂市",
+            "邳州市",
+            "其它区",
+            "常州市",
+            "天宁区",
+            "钟楼区",
+            "戚墅堰区",
+            "新北区",
+            "武进区",
+            "溧阳市",
+            "金坛市",
+            "其它区",
+            "苏州市",
+            "虎丘区",
+            "吴中区",
+            "相城区",
+            "姑苏区",
+            "常熟市",
+            "张家港市",
+            "昆山市",
+            "吴江区",
+            "太仓市",
+            "其它区",
+            "南通市",
+            "崇川区",
+            "港闸区",
+            "通州区",
+            "海安县",
+            "如东县",
+            "启东市",
+            "如皋市",
+            "海门市",
+            "其它区",
+            "连云港市",
+            "连云区",
+            "新浦区",
+            "海州区",
+            "赣榆县",
+            "东海县",
+            "灌云县",
+            "灌南县",
+            "其它区",
+            "淮安市",
+            "清河区",
+            "淮安区",
+            "淮阴区",
+            "清浦区",
+            "涟水县",
+            "洪泽县",
+            "盱眙县",
+            "金湖县",
+            "其它区",
+            "盐城市",
+            "亭湖区",
+            "盐都区",
+            "响水县",
+            "滨海县",
+            "阜宁县",
+            "射阳县",
+            "建湖县",
+            "东台市",
+            "大丰市",
+            "其它区",
+            "扬州市",
+            "广陵区",
+            "邗江区",
+            "宝应县",
+            "仪征市",
+            "高邮市",
+            "江都区",
+            "其它区",
+            "镇江市",
+            "京口区",
+            "润州区",
+            "丹徒区",
+            "丹阳市",
+            "扬中市",
+            "句容市",
+            "其它区",
+            "泰州市",
+            "海陵区",
+            "高港区",
+            "兴化市",
+            "靖江市",
+            "泰兴市",
+            "姜堰区",
+            "其它区",
+            "宿迁市",
+            "宿城区",
+            "宿豫区");
 
     private static final int CITIES[] = {
             350602, 370782, 513431, 532624, 530426, 370203, 350128, 421002, 350624, 430225, 360300, 350203,
@@ -377,8 +576,7 @@ public class RandomUtils {
 
     public static String generateRandomChinaRegion() {
         Random random = RandomUtils.getRandom();
-        String[] chinaRegions = {"华北", "华东", "华南", "华中", "西北", "西南", "东北", "台港澳"};
-        return chinaRegions[random.nextInt(chinaRegions.length)];
+        return CHINA_REGIONS[random.nextInt(CHINA_REGIONS.length)];
     }
 
     public static String randomProvince() {
@@ -394,6 +592,14 @@ public class RandomUtils {
     public static String randomCity() {
         Random random = RandomUtils.getLocalRandom();
         return CHINA_CITIES[random.nextInt(CHINA_CITIES.length)];
+    }
+
+    public static String randomCounty(boolean prefix) {
+        Random random = RandomUtils.getLocalRandom();
+        if (prefix) {
+            return randomProvince() + " " + randomCity() + " " + COUNTY.get(random.nextInt(COUNTY.size()));
+        }
+        return COUNTY.get(random.nextInt(COUNTY.size()));
     }
 
     public static String englishName() {
