@@ -20,7 +20,7 @@
         <maven.configuration.manifestFile>src/main/resources/META-INF/MANIFEST.MF</maven.configuration.manifestFile>
     </properties>
 
-    <name>MeterSphere JMeter</name>
+    <name>MeterSphere JMeter Functions</name>
     <description>MeterSphere JMeter Functions</description>
     <licenses>
         <license>
