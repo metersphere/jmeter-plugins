@@ -101,26 +101,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <!-- 寻找 setting.xml 里配置的密码¬-->
-                <configuration>
-                    <gpgArguments>
-                        <arg>--pinentry-mode</arg>
-                        <arg>loopback</arg>
-                    </gpgArguments>
-                </configuration>
-            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -133,9 +114,8 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>oss</id>
-            <name>OSS sonatype Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>fit2cloud-public</id>
+            <url>https://repository.fit2cloud.com/content/repositories/fit2cloud-public</url>
         </repository>
     </distributionManagement>
 </project>
