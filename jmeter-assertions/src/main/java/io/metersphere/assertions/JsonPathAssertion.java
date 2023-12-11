@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package io.metersphere.jmeter;
+package io.metersphere.assertions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import io.metersphere.jmeter.util.VerifyUtils;
+import io.metersphere.assertions.util.VerifyUtils;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;

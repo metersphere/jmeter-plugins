@@ -1,4 +1,4 @@
-package io.metersphere.jmeter.util;
+package io.metersphere.assertions.util;
 
 import org.apache.commons.lang3.StringUtils;
 

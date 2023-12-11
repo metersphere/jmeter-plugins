@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package io.metersphere.jmeter.gui;
+package io.metersphere.assertions.gui;
 
-import io.metersphere.jmeter.JsonPathAssertion;
+import io.metersphere.assertions.JsonPathAssertion;
 import net.miginfocom.swing.MigLayout;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
 import org.apache.jmeter.gui.GUIMenuSortOrder;
