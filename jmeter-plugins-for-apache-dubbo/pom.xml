@@ -290,9 +290,8 @@
 
     <distributionManagement>
         <repository>
-            <id>oss</id>
-            <name>OSS sonatype Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>metersphere-public</id>
+            <url>https://repository.fit2cloud.com/repository/metersphere/</url>
         </repository>
     </distributionManagement>
 
