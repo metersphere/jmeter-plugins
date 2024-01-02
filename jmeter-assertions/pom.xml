@@ -62,7 +62,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.metersphere.assertions.JsonPathAssertion</mainClass>
+                            <mainClass>io.metersphere.assertions.JSONPathAssertion</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
