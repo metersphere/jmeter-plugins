@@ -21,6 +21,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Predicate;
 import io.metersphere.assertions.gui.JSONAssertionCondition;
 import io.metersphere.assertions.util.VerifyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.assertions.LogErrorHandler;
@@ -123,7 +124,7 @@ public class XMLAssertion extends AbstractTestElement implements Serializable, A
         // no error as default
         AssertionResult result = new AssertionResult(getName());
         String resultData = response.getResponseDataAsString();
-        if (resultData.isBlank()) {
+        if (StringUtils.isBlank(resultData)) {
             log.info("XMLAssertion: responseData is null");
             return result.setResultForNull();
         }
