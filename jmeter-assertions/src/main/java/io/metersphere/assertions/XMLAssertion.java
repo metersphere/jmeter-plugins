@@ -50,16 +50,42 @@ import java.util.function.BiConsumer;
 public class XMLAssertion extends AbstractTestElement implements Serializable, Assertion, ThreadListener {
     private static final Logger log = LoggerFactory.getLogger(XMLAssertion.class);
     private static final long serialVersionUID = 242L;
-    public String getXmlPath() {
-        return this.getPropertyAsString("XML_PATH");
+
+    public static final String XML_PATH = "XML_PATH";
+    public static final String EXPECTED_VALUE = "EXPECTED_VALUE";
+    public static final String JSON_VALIDATION = "JSONVALIDATION";
+    public static final String CONDITION = "CONDITION";
+
+    public String getJsonPath() {
+        return getPropertyAsString(XML_PATH);
+    }
+
+    public void setJsonPath(String jsonPath) {
+        setProperty(XML_PATH, jsonPath);
     }
 
     public String getExpectedValue() {
-        return this.getPropertyAsString("EXPECTED_VALUE");
+        return getPropertyAsString(EXPECTED_VALUE);
+    }
+
+    public void setExpectedValue(String expectedValue) {
+        setProperty(EXPECTED_VALUE, expectedValue);
+    }
+
+    public void setJsonValidationBool(boolean jsonValidation) {
+        setProperty(JSON_VALIDATION, jsonValidation);
+    }
+
+    public void setCondition(String condition) {
+        setProperty(CONDITION, condition);
     }
 
     public String getCondition() {
-        return getPropertyAsString("ElementCondition");
+        return getPropertyAsString(CONDITION);
+    }
+
+    public boolean isJsonValidationBool() {
+        return getPropertyAsBoolean(JSON_VALIDATION);
     }
 
     private static DecimalFormat createDecimalFormat() {
@@ -97,31 +123,28 @@ public class XMLAssertion extends AbstractTestElement implements Serializable, A
         // no error as default
         AssertionResult result = new AssertionResult(getName());
         String resultData = response.getResponseDataAsString();
-        log.info("转成jsonobject的对象" + resultData);
-        if (resultData.length() == 0) {
+        if (resultData.isBlank()) {
+            log.info("XMLAssertion: responseData is null");
             return result.setResultForNull();
         }
         result.setFailure(false);
         XMLReader builder = XML_READER.get();
-        log.info("转成jsonobject的对象" + resultData);
         if (builder != null) {
             try {
                 builder.setErrorHandler(new LogErrorHandler());
                 builder.parse(new InputSource(new StringReader(resultData)));
                 try {
-                    log.info("转成jsonobject的对象" + resultData);
-                    JSONObject xmlJSONObj = XML.toJSONObject(resultData);
-                    log.info("转成jsonobject的对象" + xmlJSONObj);
-                    String jsonString = xmlJSONObj.toString(4);
-                    log.info("测试的转成json的xml" + jsonString);
-                    Object actualValue = JsonPath.read(jsonString, this.getXmlPath(), new Predicate[0]);
-                    log.info("转化的对象是啥",actualValue.toString());
-                    String jsonPathExpression = getXmlPath();
-                    if (!JsonPath.isPathDefinite(jsonPathExpression)) {
+                    JSONObject xmlObject = XML.toJSONObject(resultData);
+                    String jsonString = xmlObject.toString(4);
+                    Object actualValue = JsonPath.read(jsonString, this.getJsonPath(), new Predicate[0]);
+                    String jsonPathExpression = getJsonPath();
+                    if (isJsonValidationBool() && !JsonPath.isPathDefinite(jsonPathExpression)) {
                         // 没有勾选匹配值，只检查表达式是否正确
+                        log.error("JSONPath is indefinite");
                         throw new IllegalStateException("JSONPath is indefinite");
                     }
                     JSONAssertionCondition condition = JSONAssertionCondition.valueOf(getCondition());
+                    log.info("JSONPathAssertion: actualValue: {}, expectedValue: {}, condition: {}", actualValue, jsonPathExpression, condition);
 
                     VerifyUtils.jsonPathValue.set(jsonPathExpression);
                     BiConsumer<Object, String> assertMethod = condition.getAssertMethod();

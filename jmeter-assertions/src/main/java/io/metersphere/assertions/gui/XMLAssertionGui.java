@@ -141,11 +141,11 @@ public class XMLAssertionGui extends AbstractAssertionGui implements ChangeListe
     public void modifyTestElement(TestElement element) {
         super.configureTestElement(element);
         if (element instanceof XMLAssertion jpAssertion) {
-            jpAssertion.setProperty("XML_PATH", jsonPath.getText());
-            jpAssertion.setProperty("EXPECTED_VALUE",jsonValue.getText());
+            jpAssertion.setJsonPath(jsonPath.getText());
+            jpAssertion.setExpectedValue(jsonValue.getText());
             conditionButtonMap.forEach((condition, button) -> {
                 if (button.isSelected()) {
-                    jpAssertion.setProperty("ElementCondition",condition.name());
+                    jpAssertion.setCondition(condition.name());
                 }
             });
         }
@@ -155,8 +155,9 @@ public class XMLAssertionGui extends AbstractAssertionGui implements ChangeListe
     public void configure(TestElement element) {
         super.configure(element);
         if (element instanceof XMLAssertion jpAssertion) {
-            jsonPath.setText(jpAssertion.getXmlPath());
+            jsonPath.setText(jpAssertion.getJsonPath());
             jsonValue.setText(jpAssertion.getExpectedValue());
+            jpAssertion.setJsonValidationBool(jsonChecked.isSelected());
 
             String condition = jpAssertion.getCondition();
             if (StringUtils.isBlank(condition)) {
