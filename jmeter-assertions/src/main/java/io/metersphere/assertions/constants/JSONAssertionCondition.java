@@ -1,4 +1,4 @@
-package io.metersphere.assertions.gui;
+package io.metersphere.assertions.constants;
 
 import io.metersphere.assertions.util.VerifyUtils;
 

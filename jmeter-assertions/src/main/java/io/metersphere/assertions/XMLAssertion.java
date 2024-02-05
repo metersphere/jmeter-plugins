@@ -19,7 +19,7 @@ package io.metersphere.assertions;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Predicate;
-import io.metersphere.assertions.gui.JSONAssertionCondition;
+import io.metersphere.assertions.constants.JSONAssertionCondition;
 import io.metersphere.assertions.util.VerifyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.assertions.Assertion;

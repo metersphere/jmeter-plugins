@@ -18,6 +18,7 @@
 package io.metersphere.assertions.gui;
 
 import io.metersphere.assertions.XMLAssertion;
+import io.metersphere.assertions.constants.JSONAssertionCondition;
 import net.miginfocom.swing.MigLayout;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
