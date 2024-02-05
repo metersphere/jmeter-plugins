@@ -82,7 +82,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
     public AssertionResult getResult(SampleResult samplerResult) {
         AssertionResult result = new AssertionResult(getName());
         String responseData = samplerResult.getResponseDataAsString();
-        if (responseData.isEmpty()) {
+        if (StringUtils.isBlank(responseData)) {
+            log.info("JSONPathAssertion: responseData is null");
             return result.setResultForNull();
         }
 
@@ -93,10 +94,12 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         String jsonPathExpression = getJsonPath();
         if (isJsonValidationBool() && !JsonPath.isPathDefinite(jsonPathExpression)) {
             // 没有勾选匹配值，只检查表达式是否正确
+            log.error("JSONPath is indefinite");
             throw new IllegalStateException("JSONPath is indefinite");
         }
 
         JSONAssertionCondition condition = JSONAssertionCondition.valueOf(getCondition());
+        log.info("JSONPathAssertion: actualValue: {}, expectedValue: {}, condition: {}", actualValue, jsonPathExpression, condition);
 
         VerifyUtils.jsonPathValue.set(jsonPathExpression);
         BiConsumer<Object, String> assertMethod = condition.getAssertMethod();
