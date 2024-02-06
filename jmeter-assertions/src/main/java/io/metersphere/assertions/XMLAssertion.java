@@ -52,7 +52,7 @@ public class XMLAssertion extends AbstractTestElement implements Serializable, A
     private static final Logger log = LoggerFactory.getLogger(XMLAssertion.class);
     private static final long serialVersionUID = 242L;
 
-    public static final String XML_PATH = "XML_PATH";
+    public static final String XML_PATH = "JSON_PATH";
     public static final String EXPECTED_VALUE = "EXPECTED_VALUE";
     public static final String JSON_VALIDATION = "JSONVALIDATION";
     public static final String CONDITION = "CONDITION";
