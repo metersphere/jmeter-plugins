@@ -208,8 +208,7 @@ public class Mock {
             if (func.length == 1) {
                 return value;
             }
-            value = FunctionApply.apply(value.toString(), func[1].trim());
-            return value;
+            return FunctionApply.apply(value.toString(), func[1].trim());
         } catch (Exception e) {
             return itemValue;
         }

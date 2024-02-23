@@ -1,5 +1,8 @@
 package io.metersphere.jmeter.mock.function;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum FunctionApply {
     MD5,
     BASE64,
@@ -18,7 +21,7 @@ public enum FunctionApply {
     NUMBER;
 
     public static String apply(String value, String funcStr) {
-        String[] args = funcStr.split(":");
+        String[] args = compile(funcStr);
         switch (args[0]) {
             case "md5":
                 return MD5Fun.calculate(value);
@@ -51,7 +54,7 @@ public enum FunctionApply {
             case "number":
                 return number(value);
             default:
-                return null;
+                return funcStr;
         }
     }
 
@@ -65,7 +68,7 @@ public enum FunctionApply {
 
     public static String concat(String value, String func, boolean isPrefix) {
         try {
-             if (isPrefix) {
+            if (isPrefix) {
                 return func + value;
             } else {
                 return value + func;
@@ -78,12 +81,24 @@ public enum FunctionApply {
     public static String subStr(String value, String func) {
         try {
             String[] args = func.split(",");
-             if (args.length <= 1) {
+            if (args.length <= 1) {
                 return value;
             }
             return value.substring(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         } catch (Exception e) {
             return value;
         }
+    }
+
+    public static String[] compile(String input) {
+        Pattern pattern = Pattern.compile("(\\w+)\\((.*?)\\)");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            String functionName = matcher.group(1);
+            String arguments = matcher.group(2);
+            return new String[]{functionName, arguments};
+        }
+        return new String[]{};
     }
 }
