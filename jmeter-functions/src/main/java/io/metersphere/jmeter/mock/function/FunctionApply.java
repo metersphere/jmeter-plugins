@@ -1,5 +1,7 @@
 package io.metersphere.jmeter.mock.function;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,7 +86,15 @@ public enum FunctionApply {
             if (args.length <= 1) {
                 return value;
             }
-            return value.substring(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+            int start = 0;
+            if (StringUtils.isNotBlank(args[0])) {
+                start = Math.max(Integer.parseInt(args[0]), 0);
+            }
+            int end = value.length();
+            if (StringUtils.isNotBlank(args[1])) {
+                end = Integer.parseInt(args[1]);
+            }
+            return value.substring(start, end);
         } catch (Exception e) {
             return value;
         }
@@ -99,6 +109,6 @@ public enum FunctionApply {
             String arguments = matcher.group(2);
             return new String[]{functionName, arguments};
         }
-        return new String[]{};
+        return new String[]{input};
     }
 }
