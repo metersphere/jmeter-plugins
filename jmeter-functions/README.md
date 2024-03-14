@@ -124,6 +124,6 @@ ${__Mock(@integer)}
 `@ctitle`	随机生成一个中文标题
 
 ## 正则表达式
-`@regexp(input,regexp)`	根据正则表达式返回结果,表达式需要加引号''
+`@regexp(regexp)`	根据正则表达式返回结果,表达式需要加引号''
 
 ## 支持组合函数@word@title@title这种连续拼接方式，组合函数中间尽量不要出现特殊字符
