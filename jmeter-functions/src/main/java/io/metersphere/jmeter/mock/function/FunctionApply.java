@@ -2,6 +2,7 @@ package io.metersphere.jmeter.mock.function;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,7 +63,7 @@ public enum FunctionApply {
 
     public static String number(String value) {
         try {
-            return String.valueOf(Double.parseDouble(value));
+            return String.valueOf(new BigDecimal(value));
         } catch (Exception e) {
             return value;
         }

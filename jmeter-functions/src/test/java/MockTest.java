@@ -4,7 +4,7 @@ import io.metersphere.jmeter.mock.Mock;
 public class MockTest {
     public static void main(String[] args) {
         // 基本变量
-        System.out.println("@boolean= " + Mock.calculate("@cname@bool@natural"));
+        System.out.println("@boolean= " + Mock.calculate("@regexp('/[a-z][A-Z]\\d{5,10}/')"));
         System.out.println("@natural= " + Mock.calculate("@natural")); // 待补充
         System.out.println("@natural(1,101)= " + Mock.calculate("@natural(1,101)"));// 待补充
         System.out.println("@integer= " + Mock.calculate("@integer"));

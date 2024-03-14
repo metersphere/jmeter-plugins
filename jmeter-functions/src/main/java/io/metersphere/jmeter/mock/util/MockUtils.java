@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import static io.metersphere.jmeter.mock.util.ChineseUtils.getFamilyName;
+
 /**
  * <p>
  * 随机数据助手,可能会用到的所有随机方法<br>
@@ -110,7 +112,7 @@ public class MockUtils {
      * 随机获取一个中文姓氏 - 百家姓中获取
      */
     public static String cfirst() {
-        return ChineseUtils.getFamilyName();
+        return getFamilyName();
     }
 
     /**
@@ -587,7 +589,7 @@ public class MockUtils {
      * 返回一个随机的假中文词语,长度2-4
      */
     public static String cword() {
-        return ctitle(2, 4);
+        return ctitle(0, 1);
     }
 
 
@@ -871,18 +873,15 @@ public class MockUtils {
 
     /* —————————————————————— natural —————————————————————— */
 
+    public static float floatNumber(int min, int max, int minDecimalPlaces, int maxDecimalPlaces) {
+        Random random = new Random();
+        double randomNumber = min + (max - min) * random.nextDouble(); // 生成1到10之间的随机浮点数
 
-    public static float floatNumber(int min, int max, int precision, int scale) {
-        Random random = RandomUtils.getLocalRandom();
-        if (min >= max || precision < 0 || scale < 0) {
-            random.nextFloat();
-        }
-
-        float randomValue = min + random.nextFloat() * (max - min);
-
-        // Applying precision and scale
-        int factor = (int) Math.pow(10, precision);
-        return Math.round(randomValue * factor) / (float) factor;
+        // 生成随机小数部分位数
+        int decimalPlaces = random.nextInt(maxDecimalPlaces - minDecimalPlaces + 1) + minDecimalPlaces;
+        double multiplier = Math.pow(10, decimalPlaces);
+        double result = Math.round(randomNumber * multiplier) / multiplier;
+        return (float) result;
     }
 
     public static float floatNumber() {
@@ -953,7 +952,7 @@ public class MockUtils {
     }
 
     public static String clast() {
-        return name();
+        return getFamilyName();
     }
 
     public static String rgb() {
