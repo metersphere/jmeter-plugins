@@ -936,7 +936,7 @@ public class MockUtils {
     }
 
     public static String idCard(String birthYear) {
-        return RandomUtils.getIdNo(birthYear, true);
+        return IDCardGenerator.generateIDCard(birthYear);
     }
 
     public static String phoneNumber() {

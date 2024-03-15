@@ -198,11 +198,28 @@ public class Mock {
         return null;
     }
 
+    private static String addQuotesToRegexpContent(String input) {
+        // 检查是否以"@regexp("开头并以")"结尾
+        if (input.startsWith("@regexp(") && input.endsWith(")")) {
+            // 提取中间的内容
+            String content = input.substring(8, input.length() - 1);
+            // 将中间的内容包裹在单引号中
+            return "@regexp('" + content + "')";
+        } else if (input.startsWith("@idCard(") && input.endsWith(")")) {
+            // 提取中间的内容
+            String content = input.substring(8, input.length() - 1);
+            // 将中间的内容包裹在单引号中
+            return "@idCard('" + content + "')";
+        }
+        return input;
+    }
+
     public static Object calculate(Object itemValue) {
         if (ObjectUtils.isEmpty(itemValue)) {
             return itemValue;
         }
         try {
+            itemValue = addQuotesToRegexpContent(itemValue.toString());
             String[] func = itemValue.toString().split("\\|");
             Object value = ParameterParser.parser(func[0].trim(), func[0].trim());
             if (func.length == 1) {
