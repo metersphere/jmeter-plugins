@@ -210,6 +210,19 @@ public class Mock {
             String content = input.substring(8, input.length() - 1);
             // 将中间的内容包裹在单引号中
             return "@idCard('" + content + "')";
+        } else if (input.startsWith("@integer(") && input.endsWith(")")) {
+            // 提取中间的内容
+            String content = input.substring(9, input.length() - 1);
+            // 将中间的内容包裹在单引号中
+            return "@integer('" + content + "')";
+        } else if (input.startsWith("@range(") && input.endsWith(")")) {
+            // 提取中间的内容
+            String content = input.substring(7, input.length() - 1);
+            // 将中间的内容包裹在单引号中
+            return "@range('" + content + "')";
+        } else if (input.equals("@rgb")) {
+            // 解决和rgba冲突问题
+            return "@xrgb";
         }
         return input;
     }

@@ -955,7 +955,7 @@ public class MockUtils {
         return getFamilyName();
     }
 
-    public static String rgb() {
+    public static String xrgb() {
         return RandomUtils.rgb();
     }
 
