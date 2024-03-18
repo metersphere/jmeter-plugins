@@ -589,7 +589,7 @@ public class MockUtils {
      * 返回一个随机的假中文词语,长度2-4
      */
     public static String cword() {
-        return ctitle(0, 1);
+        return ctitle(1, 1);
     }
 
 
@@ -980,7 +980,7 @@ public class MockUtils {
     }
 
     public static String regexp(String input, String regex) {
-        return RandomUtils.regexp(input, regex);
+        return RandomUtils.regexp(input + regex);
     }
 
     public static String regexp(String regex) {

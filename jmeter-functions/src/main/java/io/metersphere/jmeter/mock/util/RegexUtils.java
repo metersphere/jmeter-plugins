@@ -1,5 +1,10 @@
 package io.metersphere.jmeter.mock.util;
 
+import io.metersphere.jmeter.mock.exception.RegexpIllegalException;
+import io.metersphere.jmeter.mock.exception.TypeNotMatchException;
+import io.metersphere.jmeter.mock.exception.UninitializedException;
+import io.metersphere.jmeter.mock.util.regex.OrdinaryNode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -26,5 +31,13 @@ public class RegexUtils {
         }
         //返回结果
         return end;
+    }
+
+    public static String generator(String expression) {
+        try {
+            return new OrdinaryNode(expression).random();
+        } catch (RegexpIllegalException | TypeNotMatchException | UninitializedException e) {
+            return expression;
+        }
     }
 }

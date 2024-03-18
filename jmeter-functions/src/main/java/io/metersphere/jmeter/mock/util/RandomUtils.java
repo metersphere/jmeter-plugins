@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 随机值获取工具类
@@ -655,31 +653,12 @@ public class RandomUtils {
         return String.format("hsl(%d, %d%%, %d%%)", hue, saturation, lightness);
     }
 
-    public static String regexp(String input, String regex) {
-        try {
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(input);
-            if (matcher.find()) {
-                return matcher.group(1); // Group 1 contains the matched value
-            } else {
-                return "No match found";
-            }
-        } catch (Exception e) {
-            return regex;
-        }
-    }
 
-    public static String regexp(String regex) {
+    public static String regexp(String pattern) {
         try {
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(RandomUtils.getRandomString());
-            if (matcher.find()) {
-                return matcher.group(1); // Group 1 contains the matched value
-            } else {
-                return regex;
-            }
+            return RegexUtils.generator(pattern);
         } catch (Exception e) {
-            return regex;
+            return pattern;
         }
     }
 
@@ -747,5 +726,4 @@ public class RandomUtils {
         }
         return calcR[result % 11];
     }
-
 }
