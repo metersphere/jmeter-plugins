@@ -14,7 +14,9 @@ public class CheckUtils {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static void checkZookeeper(ReferenceConfig<?> reference) throws Exception {
-        if (!Constants.REGISTRY_ZOOKEEPER.equals(reference.getRegistry().getProtocol())) return;
+        if (reference.getRegistry() == null || !Constants.REGISTRY_ZOOKEEPER.equals(reference.getRegistry().getProtocol())) {
+            return;
+        }
 
         log.info("check zookeeper connect");
         List<URL> urls = ConfigValidationUtils.loadRegistries(reference, false);
