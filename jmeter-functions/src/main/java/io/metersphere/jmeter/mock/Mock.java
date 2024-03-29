@@ -199,33 +199,49 @@ public class Mock {
     }
 
     private static String addQuotesToRegexpContent(String input) {
-        // 检查是否以"@regexp("开头并以")"结尾
-        if (input.startsWith("@regexp(") && input.endsWith(")")) {
-            // 提取中间的内容
-            String content = input.substring(8, input.length() - 1);
-            // 将中间的内容包裹在单引号中
-            return "@regexp('" + content + "')";
-        } else if (input.startsWith("@idCard(") && input.endsWith(")")) {
-            // 提取中间的内容
-            String content = input.substring(8, input.length() - 1);
-            // 将中间的内容包裹在单引号中
-            return "@idCard('" + content + "')";
-        } else if (input.startsWith("@integer(") && input.endsWith(")")) {
-            // 提取中间的内容
-            String content = input.substring(9, input.length() - 1);
-            // 将中间的内容包裹在单引号中
-            return "@integer('" + content + "')";
-        } else if (input.startsWith("@range(") && input.endsWith(")")) {
-            // 提取中间的内容
-            String content = input.substring(7, input.length() - 1);
-            // 将中间的内容包裹在单引号中
-            return "@range('" + content + "')";
-        } else if (input.equals("@rgb")) {
+        // 特殊情况提前处理
+        if ("@rgb".equals(input)) {
             // 解决和rgba冲突问题
             return "@xrgb";
         }
+
+        // 定义前缀和需要裁剪的长度
+        String[][] patterns = {
+                {"@regexp(", ")", "8"},
+                {"@idCard(", ")", "8"},
+                {"@integer(", ")", "9"},
+                {"@range(", ")", "7"}
+        };
+
+        for (String[] pattern : patterns) {
+            if (input.startsWith(pattern[0]) && input.endsWith(pattern[1])) {
+                return transformInput(input, pattern[0], Integer.parseInt(pattern[2]));
+            }
+        }
+
         return input;
     }
+
+    private static String transformInput(String input, String prefix, int trimLength) {
+        String modifiedInput = input;
+        String content;
+        String rest = "";
+
+        // 检查是否存在"|", 并据此分割内容和后续部分
+        if (input.contains("|")) {
+            int splitIndex = input.indexOf("|");
+            content = input.substring(prefix.length(), splitIndex - 1);
+            rest = input.substring(splitIndex); // 包括"|"
+        } else {
+            content = input.substring(trimLength, input.length() - 1);
+        }
+
+        // 将中间的内容包裹在单引号中
+        modifiedInput = prefix + "'" + content + "')" + rest;
+
+        return modifiedInput;
+    }
+
 
     public static Object calculate(Object itemValue) {
         if (ObjectUtils.isEmpty(itemValue)) {
