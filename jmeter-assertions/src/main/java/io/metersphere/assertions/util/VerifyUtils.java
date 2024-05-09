@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import io.metersphere.assertions.JSONPathAssertion;
+import io.metersphere.assertions.exception.JSONAssertionException;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
@@ -40,7 +41,7 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected greaterThan to be '%s', but found '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(value)));
+        throwJSONAssertionException(value, expectedValue, msg);
     }
 
     /**
@@ -56,7 +57,7 @@ public class VerifyUtils {
         }
 
         String msg = "Value expected greaterThanOrEqual to be '%s', but found '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(value)));
+        throwJSONAssertionException(value, expectedValue, msg);
     }
 
     /**
@@ -72,7 +73,7 @@ public class VerifyUtils {
         }
 
         String msg = "Value expected lessThan to be '%s', but found '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(value)));
+        throwJSONAssertionException(value, expectedValue, msg);
     }
 
     /**
@@ -88,7 +89,7 @@ public class VerifyUtils {
         }
 
         String msg = "Value expected lessThanOrEqual to be '%s', but found '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(value)));
+        throwJSONAssertionException(value, expectedValue, msg);
     }
 
     /**
@@ -104,7 +105,7 @@ public class VerifyUtils {
         }
 
         String msg = "Value expected contains to be '%s', but found '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(value)));
+        throwJSONAssertionException(value, expectedValue, msg);
     }
 
     /**
@@ -120,7 +121,7 @@ public class VerifyUtils {
         }
 
         String msg = "Value expected not contains to be '%s', but found '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(value)));
+        throwJSONAssertionException(value, expectedValue, msg);
     }
 
     /**
@@ -132,13 +133,13 @@ public class VerifyUtils {
     private static int getCompareResult(Object value, String expectedValue) {
         if (value == null || StringUtils.isBlank(expectedValue)) {
             String msg = "ExpectedValue or actualValue is null, expectedValue='%s', actualValue='%s'";
-            throw new IllegalStateException(String.format(msg, expectedValue, value));
+            throwJSONAssertionException(value, expectedValue, msg);
         }
 
         String actualValue = value.toString();
         if (validateNumber(actualValue) || validateNumber(expectedValue)) {
             String msg = "ExpectedValue or actualValue is not number, expectedValue='%s', actualValue='%s'";
-            throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue)));
+            throwJSONAssertionException(actualValue, expectedValue, msg);
         }
 
         return Double.valueOf(actualValue).compareTo(Double.valueOf(expectedValue));
@@ -174,7 +175,7 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected to be: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue)));
+        throwJSONAssertionException(actualValue, expectedValue, msg);
     }
 
     public static void startsWithAssert(Object actualValue, String expectedValue) {
@@ -182,7 +183,7 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected to start with : \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue)));
+        throwJSONAssertionException(actualValue, expectedValue, msg);
     }
 
     public static void endsWithAssert(Object actualValue, String expectedValue) {
@@ -190,7 +191,15 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected to end with : \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue)));
+        throwJSONAssertionException(actualValue, expectedValue, msg);
+    }
+
+    private static void throwJSONAssertionException(Object actualValue, String expectedValue, String msg) {
+        throw new JSONAssertionException(String.format(msg, expectedValue, objectToString(actualValue)), objectToString(actualValue));
+    }
+
+    private static void throwJSONAssertionLengthException(Object actualValue, String expectedValue, String msg) {
+        throw new JSONAssertionException(String.format(msg, expectedValue, objectToString(actualValue).length()), objectToString(actualValue));
     }
 
     public static void emptyAssert(Object actualValue, String expectedValue) {
@@ -198,7 +207,7 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected to be: null, but found: \n %s";
-        throw new IllegalStateException(String.format(msg, actualValue));
+        throw new JSONAssertionException(String.format(msg, actualValue), objectToString(actualValue));
     }
 
     public static void notEmptyAssert(Object actualValue, String expectedValue) {
@@ -206,7 +215,7 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected to be: not null, but found: null";
-        throw new IllegalStateException(msg);
+        throw new JSONAssertionException(msg, objectToString(actualValue));
     }
 
     public static void regexAssert(Object actualValue, String expectedValue) {
@@ -222,7 +231,7 @@ public class VerifyUtils {
             }
         }
         String msg = "Value expected to match regexp '%s', but it did not match: '%s'";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue)));
+        throwJSONAssertionException(actualValue, expectedValue, msg);
     }
 
     private static DecimalFormat createDecimalFormat() {
@@ -241,7 +250,7 @@ public class VerifyUtils {
         } catch (NumberFormatException e) {
         }
         String msg = "Value expected to length: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue).length()));
+        throwJSONAssertionLengthException(actualValue, expectedValue, msg);
     }
 
     public static void lengthNotEqualsAssert(Object actualValue, String expectedValue) {
@@ -253,7 +262,7 @@ public class VerifyUtils {
         } catch (NumberFormatException e) {
         }
         String msg = "Value expected to length not equals: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue).length()));
+        throwJSONAssertionLengthException(actualValue, expectedValue, msg);
     }
 
     public static void lengthGreaterThanAssert(Object actualValue, String expectedValue) {
@@ -265,7 +274,7 @@ public class VerifyUtils {
         } catch (NumberFormatException e) {
         }
         String msg = "Value expected to length greater than: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue).length()));
+        throwJSONAssertionLengthException(actualValue, expectedValue, msg);
     }
 
     public static void lengthGreaterThanOrEqualAssert(Object actualValue, String expectedValue) {
@@ -277,7 +286,7 @@ public class VerifyUtils {
         } catch (NumberFormatException e) {
         }
         String msg = "Value expected to length greater or equals than: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue).length()));
+        throwJSONAssertionLengthException(actualValue, expectedValue, msg);
     }
 
     public static void lengthLessThanAssert(Object actualValue, String expectedValue) {
@@ -289,7 +298,7 @@ public class VerifyUtils {
         } catch (NumberFormatException e) {
         }
         String msg = "Value expected to length less than: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue).length()));
+        throwJSONAssertionLengthException(actualValue, expectedValue, msg);
     }
 
     public static void lengthLessThanOrEqualAssert(Object actualValue, String expectedValue) {
@@ -301,7 +310,7 @@ public class VerifyUtils {
         } catch (NumberFormatException e) {
         }
         String msg = "Value expected to length less or equals than: \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue).length()));
+        throwJSONAssertionLengthException(actualValue, expectedValue, msg);
     }
 
 
@@ -344,7 +353,7 @@ public class VerifyUtils {
             return;
         }
         String msg = "Value expected to not equals : \n %s \n but found: \n %s";
-        throw new IllegalStateException(String.format(msg, expectedValue, objectToString(actualValue)));
+        throwJSONAssertionException(actualValue, expectedValue, msg);
     }
 
     public static String objectToString(Object value) {

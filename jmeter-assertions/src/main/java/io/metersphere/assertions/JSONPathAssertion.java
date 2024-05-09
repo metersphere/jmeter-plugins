@@ -80,7 +80,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
     @Override
     public AssertionResult getResult(SampleResult samplerResult) {
-        AssertionResult result = new AssertionResult(getName());
+        JSONPathAssertionResult result = new JSONPathAssertionResult(getName());
         String responseData = samplerResult.getResponseDataAsString();
         if (StringUtils.isBlank(responseData)) {
             log.info("JSONPathAssertion: responseData is null");
@@ -90,7 +90,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         result.setFailure(false);
         result.setFailureMessage(StringUtils.EMPTY);
 
-        Object actualValue = JsonPath.read(responseData, getJsonPath());
+        String actualValue = JsonPath.read(responseData, getJsonPath());
         String jsonPathExpression = getJsonPath();
         if (isJsonValidationBool() && !JsonPath.isPathDefinite(jsonPathExpression)) {
             // 没有勾选匹配值，只检查表达式是否正确
@@ -107,6 +107,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
             assertMethod.accept(actualValue, getExpectedValue());
         }
 
+        result.setActualValue(actualValue);
         return result;
     }
 
