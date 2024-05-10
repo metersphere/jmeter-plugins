@@ -20,6 +20,7 @@ package io.metersphere.assertions;
 import com.jayway.jsonpath.JsonPath;
 import io.metersphere.assertions.constants.JSONAssertionCondition;
 import io.metersphere.assertions.util.VerifyUtils;
+import net.minidev.json.JSONValue;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.assertions.AssertionResult;
@@ -90,7 +91,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         result.setFailure(false);
         result.setFailureMessage(StringUtils.EMPTY);
 
-        String actualValue = JsonPath.read(responseData, getJsonPath());
+        Object actualValue = JsonPath.read(responseData, getJsonPath());
         String jsonPathExpression = getJsonPath();
         if (isJsonValidationBool() && !JsonPath.isPathDefinite(jsonPathExpression)) {
             // 没有勾选匹配值，只检查表达式是否正确
@@ -107,7 +108,13 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
             assertMethod.accept(actualValue, getExpectedValue());
         }
 
-        result.setActualValue(actualValue);
+        if (actualValue != null) {
+            if (actualValue instanceof String) {
+                result.setActualValue((String) actualValue);
+            } else {
+                result.setActualValue(JSONValue.toJSONString(actualValue));
+            }
+        }
         return result;
     }
 

@@ -170,8 +170,11 @@ public class VerifyUtils {
             if (arrayMatched((JSONArray) actualValue, expectedValue)) {
                 return;
             }
-        }
-        if (isObjectEquals(actualValue, expectedValue)) {
+        } else if (actualValue instanceof String) {
+            if (StringUtils.equals(actualValue.toString(), expectedValue)) {
+                return;
+            }
+        } else if (isObjectEquals(actualValue, expectedValue)) {
             return;
         }
         String msg = "Value expected to be: \n %s \n but found: \n %s";
