@@ -171,7 +171,7 @@ public class VerifyUtils {
                 return;
             }
         } else if (actualValue instanceof String) {
-            if (StringUtils.equals(actualValue.toString(), expectedValue)) {
+            if (isObjectEquals(actualValue, "\"" + expectedValue + "\"")) {
                 return;
             }
         } else if (isObjectEquals(actualValue, expectedValue)) {
