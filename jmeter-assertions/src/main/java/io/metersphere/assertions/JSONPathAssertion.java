@@ -93,11 +93,6 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
         Object actualValue = JsonPath.read(responseData, getJsonPath());
         String jsonPathExpression = getJsonPath();
-        if (isJsonValidationBool() && !JsonPath.isPathDefinite(jsonPathExpression)) {
-            // 没有勾选匹配值，只检查表达式是否正确
-            log.error("JSONPath is indefinite");
-            throw new IllegalStateException("JSONPath is indefinite");
-        }
 
         JSONAssertionCondition condition = JSONAssertionCondition.valueOf(getCondition());
         log.info("JSONPathAssertion: actualValue: {}, expectedValue: {}, condition: {}", actualValue, jsonPathExpression, condition);
