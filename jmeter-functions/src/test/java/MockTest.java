@@ -84,8 +84,7 @@ public class MockTest {
         System.out.println("@ctitle= " + Mock.calculate("@string|lower"));
         System.out.println("@ctitle= " + Mock.calculate("@string|upper"));
         System.out.println("@ctitle= " + Mock.calculate("@string|length"));
-        System.out.println("@ctitle= " + Mock.calculate("@string|number"));
 */
-        System.out.println(Mock.calculate("@regexp(136[0-9]{8})"));
+        System.out.println("@idCard= " + Mock.calculate("@idCard(2024-03-01)|substr(6,14)"));
     }
 }
